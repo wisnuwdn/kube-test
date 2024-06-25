@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: csv-app-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: test1
+        image: asia-southeast1-docker.pkg.dev/horizontal-oath-426209-c5/hello-repo/test1:v1
+        command: ["sh", "-c", "python app.py > talent_output.log"]
+        volumeMounts:
+        - name: log-volume
+          mountPath: ./app
+      restartPolicy: Never
+      volumes:
+      - name: log-volume
+        emptyDir: {}
+  backoffLimit: 4
